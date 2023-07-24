@@ -109,6 +109,18 @@ def wine_display_text(bottle):
 		display_text_components.append(bottle["Designation"])
 	return " ".join(display_text_components)
 
+# Unfortunately, Starlark doesn't have encoding/decoding functions for
+# strings or bytes. Even more unfortunately, CellarTracker returns strings
+# encoded in latin1/ISO-8859-1, and Starlark is unable to convert those
+# into UTF-8. So, what should be "Cuvée" comes through as "Cuv\xe9e".
+#
+# Here we will fix specific characters known to be problematic, with
+# the hope that eventually Starlark will add bytes encoding+decoding
+# and we can solve this more cleanly.
+def fix_wine_display_name(display_name):
+	return repr(display_name).replace("\\xe9", "é")
+
+
 def main(config):
 	username = config.get("cellartracker_username")
 	password = config.get("cellartracker_password")
@@ -123,12 +135,9 @@ def main(config):
 	availability_list = csv_to_dict_list(raw_availability_csv)
 
 	# TODO get this from config
-	wine_type_to_display = "Red"
+	wine_type_to_display = "Sparkling"
 
 	bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
-
-	print(bottle)
-	print(wine_display_text(bottle))
 
 	return render.Root(
 		child = render.Box(
@@ -147,7 +156,7 @@ def main(config):
 						offset_start = 20,
 						offset_end = 22,
 						child = render.WrappedText(
-							content = wine_display_text(bottle),
+							content = fix_wine_display_name(wine_display_text(bottle)),
 							color = "#808080"
 						)
 					)
