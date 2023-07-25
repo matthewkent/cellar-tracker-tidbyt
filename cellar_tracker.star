@@ -1,8 +1,9 @@
-load("render.star", "render")
-load("http.star", "http")
-load("encoding/json.star", "json")
+load("encoding/base64.star", "base64")
 load("encoding/csv.star", "csv")
+load("encoding/json.star", "json")
+load("http.star", "http")
 load("re.star", "re")
+load("render.star", "render")
 
 # convert this:
 #   [
@@ -120,6 +121,19 @@ def wine_display_text(bottle):
 def fix_wine_display_name(display_name):
 	return repr(display_name).replace("\\xe9", "é")
 
+# Use this command to generate base64 data of the image files
+#
+# python -c 'import base64; print(base64.b64encode(open("images/white-wine-glass.png", "rb").read()).decode("utf-8"))'
+#
+def get_wine_glass_image_data(wine_type):
+	if wine_type == "White":
+		return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAH1JREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr12boZmAWrGP6+b8Pw/ZMHVxjeSi2E+Jo2CnGFOIbV1FMIMgnmIXRTYdYaS7AxMsIkQYqFn8WjqAUFC0gRSBCuEGYyTDGyIgyFMMUgGmYSzAoUEwdIIa68A/c1sZkLAHHel5t001MXAAAAAElFTkSuQmCC"
+	if wine_type == "Red":
+		return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgp5g60ZVI+cYrhtY4bh+80fPjE47L0M8TVtFOIKcQyrqacQZBLMQ+imwqw1lmBjZIRJghQfcNZFUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgA6R5ftTBH+3wAAAABJRU5ErkJggg=="
+	if wine_type == "Sparkling":
+		return "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAWCAYAAAASEbZeAAAAAXNSR0IArs4c6QAAAJtJREFUOE9jZGBgYDj74td/EI0NGEuwMTLCFBmJs2KoOffyNwPxikBWYTMFZizINMYBUKTP1o3V+08eXGF4K7UQ4iaQImbBKoa/79vgikH8h+ejUBXBZJEVY5iEzb6Bsg4WwejBAHMPPIJhCoWfxcPdDwofkAKQAJiAAVCYgRQiK8BQBDMRZgJMM4pJ1FOEnNaRrQRHMK5MABMHACiPoD+N8QF/AAAAAElFTkSuQmCC"
+	else:
+		return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgp5g60ZVI+cYrhtY4bh+80fPjE47L0M8TVtFOIKcQyrqacQZBLMQ+imwqw1lmBjZIRJghQfcNZFUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgA6R5ftTBH+3wAAAABJRU5ErkJggg=="
 
 def main(config):
 	username = config.get("cellartracker_username")
@@ -135,7 +149,7 @@ def main(config):
 	availability_list = csv_to_dict_list(raw_availability_csv)
 
 	# TODO get this from config
-	wine_type_to_display = "Sparkling"
+	wine_type_to_display = "White"
 
 	bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
 
@@ -143,22 +157,24 @@ def main(config):
 		child = render.Box(
 			render.Row(
 				expanded = True,
-				main_align = "space_evenly",
+				main_align = "start",
 				cross_align = "center",
 				children = [
-					render.WrappedText(
-						content = "glass icon here",
-						width = 12
+					render.Box(
+						width = 15,
+						child = render.Image(
+							src = base64.decode(get_wine_glass_image_data(wine_type_to_display))
+						),
 					),
 					render.Marquee(
 						scroll_direction = "vertical",
-						height = 30,
-						offset_start = 20,
-						offset_end = 22,
-						child = render.WrappedText(
+						height = 32,
+						offset_start = 16,
+						offset_end = 32,
+						child = render.Padding(pad = 1, child = render.WrappedText(
 							content = fix_wine_display_name(wine_display_text(bottle)),
 							color = "#808080"
-						)
+						))
 					)
 				]
 			)
