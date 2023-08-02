@@ -27,6 +27,7 @@ INVENTORY_TEST_DATA = """
 "3404098","0177692955","Library","","750ml","USD","1","0","0","0","USD","Unknown","6/3/2023","","2018","Vallone di Cecione Canaiolo","Italy, Tuscany, Toscana IGT","Italy","Tuscany","Unknown","Toscana IGT","Vallone di Cecione","Vallone di Cecione","Red","Red","Dry","Canaiolo","Canaiolo","Unknown","Unknown","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","","","2021","2025","6","4","0","2"
 """
 
+CACHE_TTL_SECONDS = 600
 
 # convert this:
 #   [
@@ -66,13 +67,13 @@ def csv_to_dict_list(raw_csv_string):
 # that we can use for filtering out excluded bottles
 def get_inventory(username, password):
 	url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Inventory"%(username, password)
-	resp = http.get(url)
+	resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
 	return resp.body()
 
 # Get availability report which is sorted by ready to drink
 def get_availability(username, password):
 	url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Availability"%(username, password)
-	resp = http.get(url)
+	resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
 	return resp.body()
 
 # Return a list of iWine ids for bottles to be excluded from the availability report
