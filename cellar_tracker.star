@@ -2,6 +2,7 @@ load("encoding/base64.star", "base64")
 load("encoding/csv.star", "csv")
 load("encoding/json.star", "json")
 load("http.star", "http")
+load("random.star", "random")
 load("re.star", "re")
 load("render.star", "render")
 
@@ -183,8 +184,10 @@ def main(config):
 
 	availability_list = csv_to_dict_list(raw_availability_csv)
 
-	# TODO get this from config
-	wine_type_to_display = "White"
+	# Pick a random wine type
+	wine_types = ["Red", "White", "Sparkling"]
+	idx = random.number(0, len(wine_types)-1)
+	wine_type_to_display = wine_types[idx]
 
 	bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
 	wine_glass_image = get_wine_glass_image_data(wine_type_to_display)
