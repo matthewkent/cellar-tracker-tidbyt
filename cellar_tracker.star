@@ -756,8 +756,7 @@ def find_next_white(availability_list, excluded_wine_ids):
 	for bottle in availability_list:
 		bottle_id = bottle["iWine"]
 		wine_type = bottle["Type"]
-		# if wine_type == "White" and bottle_id not in excluded_wine_ids:
-		if bottle_id == "4250600":
+		if wine_type == "White" and bottle_id not in excluded_wine_ids:
 			return bottle
 	return None
 
@@ -789,6 +788,9 @@ def wine_display_text(bottle):
 		display_text_components.append(bottle["Designation"])
 	return " ".join(display_text_components)
 
+# TODO - consider removing this if XML export works reliably and we can remove
+# the csv export functions
+#
 # Unfortunately, Starlark doesn't have encoding/decoding functions for
 # strings or bytes. Even more unfortunately, CellarTracker returns strings
 # encoded in latin1/ISO-8859-1, and Starlark is unable to convert those
@@ -852,7 +854,6 @@ def main(config):
 	bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
 	wine_glass_image = get_wine_glass_image_data(wine_type_to_display)
 	wine_display_name = fix_wine_display_name(wine_display_text(bottle))
-	wine_name_element = None
 
 	return render.Root(
 		child = render.Box(
