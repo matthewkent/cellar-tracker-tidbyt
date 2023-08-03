@@ -854,25 +854,6 @@ def main(config):
 	wine_display_name = fix_wine_display_name(wine_display_text(bottle))
 	wine_name_element = None
 
-	# Vertical scrolling WrappedText within Marquee doesn't seem to work properly,
-	# but for some reason nesting the WrappedText within Padding seems to fix it.
-	# However, if the text is short enough to fit without scrolling, then nesting
-	# within Padding seems to break it. So, we pick an arbitrary threshold to estimate
-	# at what point the text is likely to scroll and hope for the best.
-	if len(wine_display_name) > 30:
-		wine_name_element = render.Padding(
-			pad = 1,
-			child = render.WrappedText(
-				content = wine_display_name,
-				color = "#808080"
-			)
-		)
-	else:
-		wine_name_element = render.WrappedText(
-			content = wine_display_name,
-			color = "#808080"
-		)
-
 	return render.Root(
 		child = render.Box(
 			render.Row(
@@ -892,7 +873,10 @@ def main(config):
 						offset_start = 32,
 						offset_end = 30,
 						align = "center",
-						child = wine_name_element
+						child = render.WrappedText(
+							content = wine_display_name,
+							color = "#808080"
+						)
 					)
 				]
 			)
