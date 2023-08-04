@@ -655,138 +655,138 @@ CACHE_TTL_SECONDS = 600
 # into this:
 #   [
 #     {
-#	    "title": "oathbreaker",
-#	    "description": "cool fantasy book",
-#	    "price": "20.00"
+#       "title": "oathbreaker",
+#       "description": "cool fantasy book",
+#       "price": "20.00"
 #     },
 #     {
-#	    "title": "rhythm of war",
-#	    "description": "another cool fantasy book",
-#	    "price": "25.00"
+#       "title": "rhythm of war",
+#       "description": "another cool fantasy book",
+#       "price": "25.00"
 #     },
 #   ]
 #
 def csv_to_dict_list(raw_csv_string):
-	csv_rows = csv.read_all(raw_csv_string)
-	header_row = csv_rows[0]
+    csv_rows = csv.read_all(raw_csv_string)
+    header_row = csv_rows[0]
 
-	result = []
-	for csv_row in csv_rows[1:-1]:
-		dict_row = {}
-		for index, field_value in enumerate(csv_row):
-			field_name = header_row[index]
-			dict_row[field_name] = field_value
-		result.append(dict_row)
-	return result
+    result = []
+    for csv_row in csv_rows[1:-1]:
+        dict_row = {}
+        for index, field_value in enumerate(csv_row):
+            field_name = header_row[index]
+            dict_row[field_name] = field_value
+        result.append(dict_row)
+    return result
 
 # Get inventory report which includes private notes
 # that we can use for filtering out excluded bottles
 def get_inventory_csv(username, password):
-	url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Inventory"%(username, password)
-	resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
-	return resp.body()
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Inventory"%(username, password)
+    resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    return resp.body()
 
 # Get availability report which is sorted by ready to drink
 def get_availability_csv(username, password):
-	url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Availability"%(username, password)
-	resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
-	return resp.body()
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Availability"%(username, password)
+    resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    return resp.body()
 
 def inventory_xml_to_dict_list(raw_xml_string):
-	result = []
-	rows = xpath.loads(raw_xml_string).query_all_nodes("/cellartracker/inventory/row")
-	for row in rows:
-		dict_row = {}
-		dict_row["iWine"] = row.query("/iWine")
-		dict_row["BottleNote"] = row.query("/BottleNote")
-		result.append(dict_row)
-	return result
+    result = []
+    rows = xpath.loads(raw_xml_string).query_all_nodes("/cellartracker/inventory/row")
+    for row in rows:
+        dict_row = {}
+        dict_row["iWine"] = row.query("/iWine")
+        dict_row["BottleNote"] = row.query("/BottleNote")
+        result.append(dict_row)
+    return result
 
 def availability_xml_to_dict_list(raw_xml_string):
-	result = []
-	rows = xpath.loads(raw_xml_string).query_all_nodes("/cellartracker/availability/row")
-	for row in rows:
-		dict_row = {}
-		dict_row["iWine"] = row.query("/iWine")
-		dict_row["Type"] = row.query("/Type")
-		dict_row["Category"] = row.query("/Category")
-		dict_row["Vintage"] = row.query("/Vintage")
-		dict_row["Producer"] = row.query("/Producer")
-		dict_row["Designation"] = row.query("/Designation")
-		dict_row["Varietal"] = row.query("/Varietal")
-		result.append(dict_row)
-	return result
+    result = []
+    rows = xpath.loads(raw_xml_string).query_all_nodes("/cellartracker/availability/row")
+    for row in rows:
+        dict_row = {}
+        dict_row["iWine"] = row.query("/iWine")
+        dict_row["Type"] = row.query("/Type")
+        dict_row["Category"] = row.query("/Category")
+        dict_row["Vintage"] = row.query("/Vintage")
+        dict_row["Producer"] = row.query("/Producer")
+        dict_row["Designation"] = row.query("/Designation")
+        dict_row["Varietal"] = row.query("/Varietal")
+        result.append(dict_row)
+    return result
 
 # Get inventory report which includes private notes
 # that we can use for filtering out excluded bottles
 def get_inventory_xml(username, password):
-	url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Inventory"%(username, password)
-	resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
-	return resp.body()
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Inventory"%(username, password)
+    resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    return resp.body()
 
 # Get availability report which is sorted by ready to drink
 def get_availability_xml(username, password):
-	url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Availability"%(username, password)
-	resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
-	return resp.body()
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Availability"%(username, password)
+    resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    return resp.body()
 
 # Return a list of iWine ids for bottles to be excluded from the availability report
 #
 # Current implementation only excludes wines earmarked for anniversaries
 def select_excluded_wine_ids(inventory_list):
-	excluded_wine_ids = []
-	for bottle in inventory_list:
-		if bottle["BottleNote"].startswith("Anniversary"):
-			excluded_wine_ids.append(bottle["iWine"])
-	return excluded_wine_ids
+    excluded_wine_ids = []
+    for bottle in inventory_list:
+        if bottle["BottleNote"].startswith("Anniversary"):
+            excluded_wine_ids.append(bottle["iWine"])
+    return excluded_wine_ids
 
 # Return the next ready-to-drink red from the availability list,
 # ignoring any wines in the exclusion list
 def find_next_red(availability_list, excluded_wine_ids):
-	for bottle in availability_list:
-		bottle_id = bottle["iWine"]
-		wine_type = bottle["Type"]
-		if wine_type == "Red" and bottle_id not in excluded_wine_ids:
-			return bottle
-	return None
+    for bottle in availability_list:
+        bottle_id = bottle["iWine"]
+        wine_type = bottle["Type"]
+        if wine_type == "Red" and bottle_id not in excluded_wine_ids:
+            return bottle
+    return None
 
 # Return the next ready-to-drink white from the availability list,
 # ignoring any wines in the exclusion list
 def find_next_white(availability_list, excluded_wine_ids):
-	for bottle in availability_list:
-		bottle_id = bottle["iWine"]
-		wine_type = bottle["Type"]
-		if wine_type == "White" and bottle_id not in excluded_wine_ids:
-			return bottle
-	return None
+    for bottle in availability_list:
+        bottle_id = bottle["iWine"]
+        wine_type = bottle["Type"]
+        if wine_type == "White" and bottle_id not in excluded_wine_ids:
+            return bottle
+    return None
 
 # Return the next ready-to-drink sparkling from the availability list,
 # ignoring any wines in the exclusion list
 def find_next_sparkling(availability_list, excluded_wine_ids):
-	for bottle in availability_list:
-		bottle_id = bottle["iWine"]
-		wine_type = bottle["Category"]
-		if wine_type == "Sparkling" and bottle_id not in excluded_wine_ids:
-			return bottle
-	return None
+    for bottle in availability_list:
+        bottle_id = bottle["iWine"]
+        wine_type = bottle["Category"]
+        if wine_type == "Sparkling" and bottle_id not in excluded_wine_ids:
+            return bottle
+    return None
 
 def find_bottle_to_display(wine_type, availability_list, excluded_wine_ids):
-	if wine_type == "Red":
-		return find_next_red(availability_list, excluded_wine_ids)
-	elif wine_type == "White":
-		return find_next_white(availability_list, excluded_wine_ids)
-	elif wine_type == "Sparkling":
-		return find_next_sparkling(availability_list, excluded_wine_ids)
-	else:
-		return find_next_red(availability_list, excluded_wine_ids)
+    if wine_type == "Red":
+        return find_next_red(availability_list, excluded_wine_ids)
+    elif wine_type == "White":
+        return find_next_white(availability_list, excluded_wine_ids)
+    elif wine_type == "Sparkling":
+        return find_next_sparkling(availability_list, excluded_wine_ids)
+    else:
+        return find_next_red(availability_list, excluded_wine_ids)
 
 def wine_display_text(bottle):
-	display_text_components = [bottle["Vintage"], bottle["Producer"]]
-	if bottle["Designation"] == "Unknown":
-		display_text_components.append(bottle["Varietal"])
-	else:
-		display_text_components.append(bottle["Designation"])
-	return " ".join(display_text_components)
+    display_text_components = [bottle["Vintage"], bottle["Producer"]]
+    if bottle["Designation"] == "Unknown":
+        display_text_components.append(bottle["Varietal"])
+    else:
+        display_text_components.append(bottle["Designation"])
+    return " ".join(display_text_components)
 
 # TODO - consider removing this if XML export works reliably and we can remove
 # the csv export functions
@@ -800,85 +800,85 @@ def wine_display_text(bottle):
 # the hope that eventually Starlark will add bytes encoding+decoding
 # and we can solve this more cleanly.
 def fix_wine_display_name(display_name):
-	# Use repr() to convert the invalid characters to hex encoded literals, and
-	# then trim off the double quotes
-	name = repr(display_name)[1:-1]
-	name = name.replace("\\xe9", "é")
-	name = name.replace("\\xe8", "è")
-	name = name.replace("\\xed", "í")
-	name = name.replace("\\xf3", "ó")
-	return name
+    # Use repr() to convert the invalid characters to hex encoded literals, and
+    # then trim off the double quotes
+    name = repr(display_name)[1:-1]
+    name = name.replace("\\xe9", "é")
+    name = name.replace("\\xe8", "è")
+    name = name.replace("\\xed", "í")
+    name = name.replace("\\xf3", "ó")
+    return name
 
 # Use this command to generate base64 data of the image files
 #
 # python -c 'import base64; print(base64.b64encode(open("images/white-wine-glass.png", "rb").read()).decode("utf-8"))'
 #
 def get_wine_glass_image_data(wine_type):
-	if wine_type == "White":
-		return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAH1JREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr12boZmAWrGP6+b8Pw/ZMHVxjeSi2E+Jo2CnGFOIbV1FMIMgnmIXRTYdYaS7AxMsIkQYqFn8WjqAUFC0gRSBCuEGYyTDGyIgyFMMUgGmYSzAoUEwdIIa68A/c1sZkLAHHel5t001MXAAAAAElFTkSuQmCC"
-	if wine_type == "Sparkling":
-		return "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAWCAYAAAASEbZeAAAAAXNSR0IArs4c6QAAAJtJREFUOE9jZGBgYDj74td/EI0NGEuwMTLCFBmJs2KoOffyNwPxikBWYTMFZizINMYBUKTP1o3V+08eXGF4K7UQ4iaQImbBKoa/79vgikH8h+ejUBXBZJEVY5iEzb6Bsg4WwejBAHMPPIJhCoWfxcPdDwofkAKQAJiAAVCYgRQiK8BQBDMRZgJMM4pJ1FOEnNaRrQRHMK5MABMHACiPoD+N8QF/AAAAAElFTkSuQmCC"
-	else: # Red is the default
-		return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgp5g60ZVI+cYrhtY4bh+80fPjE47L0M8TVtFOIKcQyrqacQZBLMQ+imwqw1lmBjZIRJghQfcNZFUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgA6R5ftTBH+3wAAAABJRU5ErkJggg=="
+    if wine_type == "White":
+        return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAH1JREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr12boZmAWrGP6+b8Pw/ZMHVxjeSi2E+Jo2CnGFOIbV1FMIMgnmIXRTYdYaS7AxMsIkQYqFn8WjqAUFC0gRSBCuEGYyTDGyIgyFMMUgGmYSzAoUEwdIIa68A/c1sZkLAHHel5t001MXAAAAAElFTkSuQmCC"
+    if wine_type == "Sparkling":
+        return "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAWCAYAAAASEbZeAAAAAXNSR0IArs4c6QAAAJtJREFUOE9jZGBgYDj74td/EI0NGEuwMTLCFBmJs2KoOffyNwPxikBWYTMFZizINMYBUKTP1o3V+08eXGF4K7UQ4iaQImbBKoa/79vgikH8h+ejUBXBZJEVY5iEzb6Bsg4WwejBAHMPPIJhCoWfxcPdDwofkAKQAJiAAVCYgRQiK8BQBDMRZgJMM4pJ1FOEnNaRrQRHMK5MABMHACiPoD+N8QF/AAAAAElFTkSuQmCC"
+    else: # Red is the default
+        return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgp5g60ZVI+cYrhtY4bh+80fPjE47L0M8TVtFOIKcQyrqacQZBLMQ+imwqw1lmBjZIRJghQfcNZFUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgA6R5ftTBH+3wAAAABJRU5ErkJggg=="
 
 def main(config):
-	# raw_inventory_csv = INVENTORY_TEST_DATA_CSV
-	# raw_availability_csv = AVAILABILITY_TEST_DATA_CSV
-	raw_inventory_xml = INVENTORY_TEST_DATA_XML
-	raw_availability_xml = AVAILABILITY_TEST_DATA_XML
+    # raw_inventory_csv = INVENTORY_TEST_DATA_CSV
+    # raw_availability_csv = AVAILABILITY_TEST_DATA_CSV
+    raw_inventory_xml = INVENTORY_TEST_DATA_XML
+    raw_availability_xml = AVAILABILITY_TEST_DATA_XML
 
-	username = config.get("cellartracker_username")
-	password = config.get("cellartracker_password")
+    username = config.get("cellartracker_username")
+    password = config.get("cellartracker_password")
 
-	if username and password:
-		print("CellarTracker credentials found, fetching data from server")
-		# raw_inventory_csv = get_inventory_csv(username, password)
-		# raw_availability_csv = get_availability_csv(username, password)
-		raw_inventory_xml = get_inventory_xml(username, password)
-		raw_availability_xml = get_availability_xml(username, password)
-	else:
-		print("No CellarTracker credentials found, defaulting to test data")
+    if username and password:
+        print("CellarTracker credentials found, fetching data from server")
+        # raw_inventory_csv = get_inventory_csv(username, password)
+        # raw_availability_csv = get_availability_csv(username, password)
+        raw_inventory_xml = get_inventory_xml(username, password)
+        raw_availability_xml = get_availability_xml(username, password)
+    else:
+        print("No CellarTracker credentials found, defaulting to test data")
 
-	# inventory_list = csv_to_dict_list(raw_inventory_csv)
-	# availability_list = csv_to_dict_list(raw_availability_csv)
-	inventory_list = inventory_xml_to_dict_list(raw_inventory_xml)
-	availability_list = availability_xml_to_dict_list(raw_availability_xml)
+    # inventory_list = csv_to_dict_list(raw_inventory_csv)
+    # availability_list = csv_to_dict_list(raw_availability_csv)
+    inventory_list = inventory_xml_to_dict_list(raw_inventory_xml)
+    availability_list = availability_xml_to_dict_list(raw_availability_xml)
 
-	excluded_wine_ids = select_excluded_wine_ids(inventory_list)
+    excluded_wine_ids = select_excluded_wine_ids(inventory_list)
 
-	# Pick a random wine type
-	wine_types = ["Red", "White", "Sparkling"]
-	idx = random.number(0, len(wine_types)-1)
-	wine_type_to_display = wine_types[idx]
+    # Pick a random wine type
+    wine_types = ["Red", "White", "Sparkling"]
+    idx = random.number(0, len(wine_types)-1)
+    wine_type_to_display = wine_types[idx]
 
-	bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
-	wine_glass_image = get_wine_glass_image_data(wine_type_to_display)
-	wine_display_name = fix_wine_display_name(wine_display_text(bottle))
+    bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
+    wine_glass_image = get_wine_glass_image_data(wine_type_to_display)
+    wine_display_name = fix_wine_display_name(wine_display_text(bottle))
 
-	return render.Root(
-		child = render.Row(
-			expanded = True,
-			main_align = "start",
-			cross_align = "center",
-			children = [
-				render.Box(
-					width = 14,
-					child = render.Image(
-						src = base64.decode(wine_glass_image)
-					),
-				),
-				render.Marquee(
-					scroll_direction = "vertical",
-					height = 32,
-					offset_start = 30,
-					offset_end = 30,
-					align = "center",
-					child = render.WrappedText(
-						width = 50,
-						content = wine_display_name,
-						color = "#808080"
-					)
-				)
-			]
-		)
-	)
+    return render.Root(
+        child = render.Row(
+            expanded = True,
+            main_align = "start",
+            cross_align = "center",
+            children = [
+                render.Box(
+                    width = 14,
+                    child = render.Image(
+                        src = base64.decode(wine_glass_image)
+                    ),
+                ),
+                render.Marquee(
+                    scroll_direction = "vertical",
+                    height = 32,
+                    offset_start = 30,
+                    offset_end = 30,
+                    align = "center",
+                    child = render.WrappedText(
+                        width = 50,
+                        content = wine_display_name,
+                        color = "#808080"
+                    )
+                )
+            ]
+        )
+    )
