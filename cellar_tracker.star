@@ -1,9 +1,8 @@
 load("encoding/base64.star", "base64")
 load("encoding/csv.star", "csv")
-load("encoding/json.star", "json")
+# load("encoding/json.star", "json")
 load("http.star", "http")
 load("random.star", "random")
-load("re.star", "re")
 load("render.star", "render")
 load("xpath.star", "xpath")
 
