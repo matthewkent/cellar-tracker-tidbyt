@@ -856,31 +856,29 @@ def main(config):
 	wine_display_name = fix_wine_display_name(wine_display_text(bottle))
 
 	return render.Root(
-		child = render.Box(
-			render.Row(
-				expanded = True,
-				main_align = "start",
-				cross_align = "center",
-				children = [
-					render.Box(
-						width = 15,
-						child = render.Image(
-							src = base64.decode(wine_glass_image)
-						),
+		child = render.Row(
+			expanded = True,
+			main_align = "start",
+			cross_align = "center",
+			children = [
+				render.Box(
+					width = 14,
+					child = render.Image(
+						src = base64.decode(wine_glass_image)
 					),
-					render.Marquee(
-						scroll_direction = "vertical",
-						height = 32,
-						offset_start = 32,
-						offset_end = 30,
-						align = "center",
-						child = render.WrappedText(
-							content = wine_display_name,
-							color = "#808080"
-						)
+				),
+				render.Marquee(
+					scroll_direction = "vertical",
+					height = 32,
+					offset_start = 30,
+					offset_end = 30,
+					align = "center",
+					child = render.WrappedText(
+						width = 50,
+						content = wine_display_name,
+						color = "#808080"
 					)
-				]
-			)
+				)
+			]
 		)
-		
 	)
