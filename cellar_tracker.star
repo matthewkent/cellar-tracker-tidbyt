@@ -877,7 +877,7 @@ def main(config):
                     child = render.WrappedText(
                         width = 50,
                         content = wine_display_name,
-                        color = "#808080",
+                        color = "#afafaf",
                     ),
                 ),
             ],
