@@ -1,5 +1,6 @@
 load("encoding/base64.star", "base64")
 load("encoding/csv.star", "csv")
+
 # load("encoding/json.star", "json")
 load("http.star", "http")
 load("random.star", "random")
@@ -681,13 +682,13 @@ def csv_to_dict_list(raw_csv_string):
 # Get inventory report which includes private notes
 # that we can use for filtering out excluded bottles
 def get_inventory_csv(username, password):
-    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Inventory"%(username, password)
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Inventory" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
     return resp.body()
 
 # Get availability report which is sorted by ready to drink
 def get_availability_csv(username, password):
-    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Availability"%(username, password)
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Availability" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
     return resp.body()
 
@@ -719,13 +720,13 @@ def availability_xml_to_dict_list(raw_xml_string):
 # Get inventory report which includes private notes
 # that we can use for filtering out excluded bottles
 def get_inventory_xml(username, password):
-    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Inventory"%(username, password)
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Inventory" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
     return resp.body()
 
 # Get availability report which is sorted by ready to drink
 def get_availability_xml(username, password):
-    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Availability"%(username, password)
+    url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Availability" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
     return resp.body()
 
@@ -817,7 +818,7 @@ def get_wine_glass_image_data(wine_type):
         return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAH1JREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr12boZmAWrGP6+b8Pw/ZMHVxjeSi2E+Jo2CnGFOIbV1FMIMgnmIXRTYdYaS7AxMsIkQYqFn8WjqAUFC0gRSBCuEGYyTDGyIgyFMMUgGmYSzAoUEwdIIa68A/c1sZkLAHHel5t001MXAAAAAElFTkSuQmCC"
     if wine_type == "Sparkling":
         return "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAWCAYAAAASEbZeAAAAAXNSR0IArs4c6QAAAJtJREFUOE9jZGBgYDj74td/EI0NGEuwMTLCFBmJs2KoOffyNwPxikBWYTMFZizINMYBUKTP1o3V+08eXGF4K7UQ4iaQImbBKoa/79vgikH8h+ejUBXBZJEVY5iEzb6Bsg4WwejBAHMPPIJhCoWfxcPdDwofkAKQAJiAAVCYgRQiK8BQBDMRZgJMM4pJ1FOEnNaRrQRHMK5MABMHACiPoD+N8QF/AAAAAElFTkSuQmCC"
-    else: # Red is the default
+    else:  # Red is the default
         return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgp5g60ZVI+cYrhtY4bh+80fPjE47L0M8TVtFOIKcQyrqacQZBLMQ+imwqw1lmBjZIRJghQfcNZFUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgA6R5ftTBH+3wAAAABJRU5ErkJggg=="
 
 def main(config):
@@ -831,6 +832,7 @@ def main(config):
 
     if username and password:
         print("CellarTracker credentials found, fetching data from server")
+
         # raw_inventory_csv = get_inventory_csv(username, password)
         # raw_availability_csv = get_availability_csv(username, password)
         raw_inventory_xml = get_inventory_xml(username, password)
@@ -847,7 +849,7 @@ def main(config):
 
     # Pick a random wine type
     wine_types = ["Red", "White", "Sparkling"]
-    idx = random.number(0, len(wine_types)-1)
+    idx = random.number(0, len(wine_types) - 1)
     wine_type_to_display = wine_types[idx]
 
     bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
@@ -863,7 +865,7 @@ def main(config):
                 render.Box(
                     width = 14,
                     child = render.Image(
-                        src = base64.decode(wine_glass_image)
+                        src = base64.decode(wine_glass_image),
                     ),
                 ),
                 render.Marquee(
@@ -875,9 +877,9 @@ def main(config):
                     child = render.WrappedText(
                         width = 50,
                         content = wine_display_name,
-                        color = "#808080"
-                    )
-                )
-            ]
-        )
+                        color = "#808080",
+                    ),
+                ),
+            ],
+        ),
     )
