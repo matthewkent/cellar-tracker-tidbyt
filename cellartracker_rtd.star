@@ -887,6 +887,8 @@ def main(config):
     username = config.get("cellartracker_username")
     password = config.get("cellartracker_password")
 
+    bottle_id_override = config.get("bottle_id")
+
     if username and password:
         print("CellarTracker credentials found, fetching data from server")
 
@@ -910,6 +912,9 @@ def main(config):
 
     idx = random.number(0, len(top_n_bottles) - 1)
     bottle = top_n_bottles[idx]
+
+    if bottle_id_override:
+        bottle = [b for b in availability_list if b["iWine"] == bottle_id_override][0]
 
     wine_glass_image = get_wine_glass_image_data(bottle)
     wine_display_name = fix_wine_display_name(wine_display_text(bottle))
