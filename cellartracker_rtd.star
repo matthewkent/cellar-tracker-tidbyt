@@ -769,12 +769,16 @@ def csv_to_dict_list(raw_csv_string):
 def get_inventory_csv(username, password):
     url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Inventory" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    if resp.status_code != 200:
+        fail("API request failed with status %d", resp.status_code)
     return resp.body()
 
 # Get availability report which is sorted by ready to drink
 def get_availability_csv(username, password):
     url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=csv&Table=Availability" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    if resp.status_code != 200:
+        fail("API request failed with status %d", resp.status_code)
     return resp.body()
 
 def inventory_xml_to_dict_list(raw_xml_string):
@@ -878,11 +882,11 @@ def select_displayable_bottles(availability_list, excluded_wine_ids):
 def main(config):
     # raw_inventory_csv = INVENTORY_TEST_DATA_CSV
     # raw_availability_csv = AVAILABILITY_TEST_DATA_CSV
-    raw_inventory_xml = INVENTORY_TEST_DATA_XML
-    raw_availability_xml = AVAILABILITY_TEST_DATA_XML
 
     username = config.get("cellartracker_username")
     password = config.get("cellartracker_password")
+
+    use_test_data = config.get("use_test_data")
 
     bottle_id_override = config.get("bottle_id")
 
@@ -893,8 +897,15 @@ def main(config):
         # raw_availability_csv = get_availability_csv(username, password)
         raw_inventory_xml = get_inventory_xml(username, password)
         raw_availability_xml = get_availability_xml(username, password)
+    elif use_test_data:
+        print("Using hardcoded test data")
+
+        raw_inventory_xml = INVENTORY_TEST_DATA_XML
+        raw_availability_xml = AVAILABILITY_TEST_DATA_XML
     else:
-        print("No CellarTracker credentials found, defaulting to test data")
+        print("No CellarTracker credentials found")
+        # Render empty screen if credentials are missing
+        return []
 
     # inventory_list = csv_to_dict_list(raw_inventory_csv)
     # availability_list = csv_to_dict_list(raw_availability_csv)
