@@ -825,46 +825,6 @@ def select_excluded_wine_ids(inventory_list):
             excluded_wine_ids.append(bottle["iWine"])
     return excluded_wine_ids
 
-# Return the next ready-to-drink red from the availability list,
-# ignoring any wines in the exclusion list
-def find_next_red(availability_list, excluded_wine_ids):
-    for bottle in availability_list:
-        bottle_id = bottle["iWine"]
-        wine_type = bottle["Type"]
-        if wine_type == "Red" and bottle_id not in excluded_wine_ids:
-            return bottle
-    return None
-
-# Return the next ready-to-drink white from the availability list,
-# ignoring any wines in the exclusion list
-def find_next_white(availability_list, excluded_wine_ids):
-    for bottle in availability_list:
-        bottle_id = bottle["iWine"]
-        wine_type = bottle["Type"]
-        if wine_type == "White" and bottle_id not in excluded_wine_ids:
-            return bottle
-    return None
-
-# Return the next ready-to-drink sparkling from the availability list,
-# ignoring any wines in the exclusion list
-def find_next_sparkling(availability_list, excluded_wine_ids):
-    for bottle in availability_list:
-        bottle_id = bottle["iWine"]
-        wine_type = bottle["Category"]
-        if wine_type == "Sparkling" and bottle_id not in excluded_wine_ids:
-            return bottle
-    return None
-
-def find_bottle_to_display(wine_type, availability_list, excluded_wine_ids):
-    if wine_type == "Red":
-        return find_next_red(availability_list, excluded_wine_ids)
-    elif wine_type == "White":
-        return find_next_white(availability_list, excluded_wine_ids)
-    elif wine_type == "Sparkling":
-        return find_next_sparkling(availability_list, excluded_wine_ids)
-    else:
-        return find_next_red(availability_list, excluded_wine_ids)
-
 def wine_display_text(bottle):
     display_text_components = [bottle["Vintage"], bottle["Producer"]]
     if bottle["Designation"] == "Unknown":
@@ -898,15 +858,25 @@ def fix_wine_display_name(display_name):
 #
 # python -c 'import base64; print(base64.b64encode(open("images/white-wine-glass.png", "rb").read()).decode("utf-8"))'
 #
-def get_wine_glass_image_data(wine_type):
+def get_wine_glass_image_data(bottle):
+    wine_type = bottle["Type"]
     if wine_type == "White":
         return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAH1JREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr12boZmAWrGP6+b8Pw/ZMHVxjeSi2E+Jo2CnGFOIbV1FMIMgnmIXRTYdYaS7AxMsIkQYqFn8WjqAUFC0gRSBCuEGYyTDGyIgyFMMUgGmYSzAoUEwdIIa68A/c1sZkLAHHel5t001MXAAAAAElFTkSuQmCC"
-    elif wine_type == "Sparkling":
+    # CellarTracker has "Red - Sparkling", "White - Sparkling" etc but we only have one sparkling image
+    elif wine_type.endswith("Sparkling"):
         return "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAWCAYAAAASEbZeAAAAAXNSR0IArs4c6QAAAJtJREFUOE9jZGBgYDj74td/EI0NGEuwMTLCFBmJs2KoOffyNwPxikBWYTMFZizINMYBUKTP1o3V+08eXGF4K7UQ4iaQImbBKoa/79vgikH8h+ejUBXBZJEVY5iEzb6Bsg4WwejBAHMPPIJhCoWfxcPdDwofkAKQAJiAAVCYgRQiK8BQBDMRZgJMM4pJ1FOEnNaRrQRHMK5MABMHACiPoD+N8QF/AAAAAElFTkSuQmCC"
-    elif wine_type == "Rosé"
+    elif wine_type == "Rosé":
         return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr1O1YzMPdHMfwtXIbh+8/7DjPc2zUJ4mvaKMQV4hhWU08hyCSYh9BNhVlrLMHGyAiTBClWcstDUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgBCkp7t6fyTqwAAAABJRU5ErkJggg=="
     else:  # Red is the default
         return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgp5g60ZVI+cYrhtY4bh+80fPjE47L0M8TVtFOIKcQyrqacQZBLMQ+imwqw1lmBjZIRJghQfcNZFUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgA6R5ftTBH+3wAAAABJRU5ErkJggg=="
+
+def select_displayable_bottles(availability_list, excluded_wine_ids):
+    displayable_bottles = []
+    for bottle in availability_list:
+        bottle_id = bottle["iWine"]
+        if bottle_id not in excluded_wine_ids:
+            displayable_bottles.append(bottle)
+    return displayable_bottles
 
 def main(config):
     # raw_inventory_csv = INVENTORY_TEST_DATA_CSV
@@ -933,14 +903,15 @@ def main(config):
     availability_list = availability_xml_to_dict_list(raw_availability_xml)
 
     excluded_wine_ids = select_excluded_wine_ids(inventory_list)
+    displayable_bottles = select_displayable_bottles(availability_list, excluded_wine_ids)
 
-    # Pick a random wine type
-    wine_types = ["Red", "White", "Sparkling"]
-    idx = random.number(0, len(wine_types) - 1)
-    wine_type_to_display = wine_types[idx]
+    top_n_length = min(10, len(displayable_bottles))
+    top_n_bottles = displayable_bottles[0:top_n_length]
 
-    bottle = find_bottle_to_display(wine_type_to_display, availability_list, excluded_wine_ids)
-    wine_glass_image = get_wine_glass_image_data(wine_type_to_display)
+    idx = random.number(0, len(top_n_bottles) - 1)
+    bottle = top_n_bottles[idx]
+
+    wine_glass_image = get_wine_glass_image_data(bottle)
     wine_display_name = fix_wine_display_name(wine_display_text(bottle))
 
     return render.Root(
