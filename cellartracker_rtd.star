@@ -340,6 +340,50 @@ AVAILABILITY_TEST_DATA_XML = """
       <EndConsume>12/31/2025</EndConsume>
       <Source>Community</Source>
     </row>
+    <row>
+      <iWine>4551812</iWine>
+      <Type>Rosé</Type>
+      <Color>Rosé</Color>
+      <Category>Dry</Category>
+      <Available>-0.534246575342466</Available>
+      <Linear>-0.534246575342466</Linear>
+      <Bell>-0.870338983050847</Bell>
+      <Early>1.94915254237289E-02</Early>
+      <Late>-1.34915254237288</Late>
+      <Fast>1.15762711864407</Fast>
+      <TwinPeak>-0.566101694915254</TwinPeak>
+      <Simple>1.5</Simple>
+      <Purchases>5</Purchases>
+      <ActualPurchases>5</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>3</LocalQuantityActual>
+      <LocalQuantity>3</LocalQuantity>
+      <Consumed>2</Consumed>
+      <ActualConsumed>2</ActualConsumed>
+      <Inventory>3</Inventory>
+      <ActualInventory>3</ActualInventory>
+      <Vintage>2022</Vintage>
+      <Wine>Arnot-Roberts Rosé</Wine>
+      <SortWine>Arnot-Roberts Rosé</SortWine>
+      <Locale>USA, California</Locale>
+      <Producer>Arnot-Roberts</Producer>
+      <Varietal>Touriga Nacional</Varietal>
+      <MasterVarietal>Touriga Nacional</MasterVarietal>
+      <Designation>Rosé</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Unknown</SubRegion>
+      <Appellation>California</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2023</ComBegin>
+      <ComEnd>2024</ComEnd>
+      <BeginConsume>1/1/2023</BeginConsume>
+      <EndConsume>12/31/2024</EndConsume>
+      <Source>Community</Source>
+    </row>
   </availability>
 </cellartracker>
 """
@@ -638,6 +682,47 @@ INVENTORY_TEST_DATA_XML = """
       <QuantityCommunity>4</QuantityCommunity>
       <PendingCommunity>0</PendingCommunity>
       <ConsumedCommunity>2</ConsumedCommunity>
+    </row>
+    <row>
+      <iWine>4551812</iWine>
+      <Barcode>0173674184</Barcode>
+      <Location>Cellar</Location>
+      <Bin></Bin>
+      <Size>750ml</Size>
+      <Currency>USD</Currency>
+      <ExchangeRate>1</ExchangeRate>
+      <Valuation>0</Valuation>
+      <Price>0</Price>
+      <NativePrice>0</NativePrice>
+      <NativePriceCurrency>USD</NativePriceCurrency>
+      <StoreName>Unknown</StoreName>
+      <PurchaseDate>2/27/2023</PurchaseDate>
+      <BottleNote></BottleNote>
+      <Vintage>2022</Vintage>
+      <Wine>Arnot-Roberts Rosé</Wine>
+      <Locale>USA, California</Locale>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Unknown</SubRegion>
+      <Appellation>California</Appellation>
+      <Producer>Arnot-Roberts</Producer>
+      <SortProducer>Arnot-Roberts</SortProducer>
+      <Type>Rosé</Type>
+      <Color>Rosé</Color>
+      <Category>Dry</Category>
+      <Varietal>Touriga Nacional</Varietal>
+      <MasterVarietal>Touriga Nacional</MasterVarietal>
+      <Designation>Rosé</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <CNotes>17</CNotes>
+      <MY></MY>
+      <PNotes></PNotes>
+      <BeginConsume>2023</BeginConsume>
+      <EndConsume>2024</EndConsume>
+      <PurchasedCommunity>664</PurchasedCommunity>
+      <QuantityCommunity>417</QuantityCommunity>
+      <PendingCommunity>31</PendingCommunity>
+      <ConsumedCommunity>216</ConsumedCommunity>
     </row>
   </inventory>
 </cellartracker>
