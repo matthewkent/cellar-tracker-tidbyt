@@ -812,12 +812,16 @@ def availability_xml_to_dict_list(raw_xml_string):
 def get_inventory_xml(username, password):
     url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Inventory" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    if resp.status_code != 200:
+        fail("API request failed with status %d", resp.status_code)
     return resp.body()
 
 # Get availability report which is sorted by ready to drink
 def get_availability_xml(username, password):
     url = "https://www.cellartracker.com/xlquery.asp?User=%s&Password=%s&Format=xml&Table=Availability" % (username, password)
     resp = http.get(url, ttl_seconds = CACHE_TTL_SECONDS)
+    if resp.status_code != 200:
+        fail("API request failed with status %d", resp.status_code)
     return resp.body()
 
 # Return a list of iWine ids for bottles to be excluded from the availability report
