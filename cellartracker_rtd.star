@@ -796,6 +796,7 @@ def availability_xml_to_dict_list(raw_xml_string):
         dict_row["Type"] = row.query("/Type")
         dict_row["Category"] = row.query("/Category")
         dict_row["Vintage"] = row.query("/Vintage")
+        dict_row["Wine"] = row.query("/Wine")
         dict_row["Producer"] = row.query("/Producer")
         dict_row["Designation"] = row.query("/Designation")
         dict_row["Varietal"] = row.query("/Varietal")
@@ -826,11 +827,7 @@ def select_excluded_wine_ids(inventory_list):
     return excluded_wine_ids
 
 def wine_display_text(bottle):
-    display_text_components = [bottle["Vintage"], bottle["Producer"]]
-    if bottle["Designation"] == "Unknown":
-        display_text_components.append(bottle["Varietal"])
-    else:
-        display_text_components.append(bottle["Designation"])
+    display_text_components = [bottle["Vintage"], bottle["Wine"]]
     return " ".join(display_text_components)
 
 # TODO - consider removing this if XML export works reliably and we can remove
