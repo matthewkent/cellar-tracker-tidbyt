@@ -796,17 +796,17 @@ def wine_display_text(bottle):
 #
 # python -c 'import base64; print(base64.b64encode(open("images/white-wine-glass.png", "rb").read()).decode("utf-8"))'
 #
-def get_wine_glass_image_data(bottle):
+def get_wine_glass_icon(bottle):
     wine_type = bottle["Type"]
     if wine_type == "White":
-        return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAH1JREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr12boZmAWrGP6+b8Pw/ZMHVxjeSi2E+Jo2CnGFOIbV1FMIMgnmIXRTYdYaS7AxMsIkQYqFn8WjqAUFC0gRSBCuEGYyTDGyIgyFMMUgGmYSzAoUEwdIIa68A/c1sZkLAHHel5t001MXAAAAAElFTkSuQmCC"
-    # CellarTracker has "Red - Sparkling", "White - Sparkling" etc but we only have one sparkling image
+        return WHITE_WINE_GLASS_ICON
     elif wine_type.endswith("Sparkling"):
-        return "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAWCAYAAAASEbZeAAAAAXNSR0IArs4c6QAAAJtJREFUOE9jZGBgYDj74td/EI0NGEuwMTLCFBmJs2KoOffyNwPxikBWYTMFZizINMYBUKTP1o3V+08eXGF4K7UQ4iaQImbBKoa/79vgikH8h+ejUBXBZJEVY5iEzb6Bsg4WwejBAHMPPIJhCoWfxcPdDwofkAKQAJiAAVCYgRQiK8BQBDMRZgJMM4pJ1FOEnNaRrQRHMK5MABMHACiPoD+N8QF/AAAAAElFTkSuQmCC"
+        # CellarTracker has "Red - Sparkling", "White - Sparkling" etc but we only have one sparkling icon
+        return SPARKLING_WINE_GLASS_ICON
     elif wine_type == "Rosé":
-        return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgr1O1YzMPdHMfwtXIbh+8/7DjPc2zUJ4mvaKMQV4hhWU08hyCSYh9BNhVlrLMHGyAiTBClWcstDUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgBCkp7t6fyTqwAAAABJRU5ErkJggg=="
-    else:  # Red is the default
-        return "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAWCAYAAAD5Jg1dAAAAAXNSR0IArs4c6QAAAIFJREFUOE9jPPvi138GIgAjSKGROCtepede/mYYfgp5g60ZVI+cYrhtY4bh+80fPjE47L0M8TVtFOIKcQyrqacQZBLMQ+imwqw1lmBjZIRJghQfcNZFUQsKFpAikCBcIcxkmGJkRRgKYYpBNMwkmBUoJg6gQvT8g+xOsBsJZTCQBgA6R5ftTBH+3wAAAABJRU5ErkJggg=="
+        return ROSE_WINE_GLASS_ICON
+    else:  
+        return RED_WINE_GLASS_ICON
 
 def select_displayable_bottles(availability_list, excluded_wine_ids):
     displayable_bottles = []
@@ -816,12 +816,20 @@ def select_displayable_bottles(availability_list, excluded_wine_ids):
             displayable_bottles.append(bottle)
     return displayable_bottles
 
+def select_bottle_to_display(top_n_value, displayable_bottles):
+    top_n_length = min(top_n_value, len(displayable_bottles))
+    top_n_bottles = displayable_bottles[0:top_n_length]
+    idx = random.number(0, len(top_n_bottles) - 1)
+    return top_n_bottles[idx]
+
 def main(config):
     username = config.get("cellartracker_username")
     password = config.get("cellartracker_password")
     exclusion_keywords_string = config.get("exclusion_keywords")
     top_n_value = int(config.get("top_n_value") or DEFAULT_TOP_N_VALUE)
 
+    # These options are not exposed in the schema and are only
+    # intended to be used in development
     use_test_data = config.get("use_test_data")
     bottle_id_override = config.get("bottle_id")
 
@@ -856,16 +864,12 @@ def main(config):
     excluded_wine_ids = select_excluded_wine_ids(inventory_list, exclusion_keyword_list)
     displayable_bottles = select_displayable_bottles(availability_list, excluded_wine_ids)
 
-    top_n_length = min(top_n_value, len(displayable_bottles))
-    top_n_bottles = displayable_bottles[0:top_n_length]
-
-    idx = random.number(0, len(top_n_bottles) - 1)
-    bottle = top_n_bottles[idx]
+    
 
     if bottle_id_override:
         bottle = [b for b in availability_list if b["iWine"] == bottle_id_override][0]
 
-    wine_glass_image = get_wine_glass_image_data(bottle)
+    wine_glass_icon = get_wine_glass_icon(bottle)
     wine_display_name = wine_display_text(bottle)
 
     return render.Root(
@@ -877,7 +881,7 @@ def main(config):
                 render.Box(
                     width = 14,
                     child = render.Image(
-                        src = base64.decode(wine_glass_image),
+                        src = wine_glass_icon,
                     ),
                 ),
                 render.Marquee(
