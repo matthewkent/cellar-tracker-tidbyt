@@ -592,7 +592,7 @@ INVENTORY_TEST_DATA_XML = """
       <NativePriceCurrency>USD</NativePriceCurrency>
       <StoreName>Unknown</StoreName>
       <PurchaseDate>12/4/2022</PurchaseDate>
-      <BottleNote></BottleNote>
+      <BottleNote>Matt Birthday 2024</BottleNote>
       <Vintage>2014</Vintage>
       <Wine>Iron Horse Vineyards Chinese Cuvee</Wine>
       <Locale>USA, California, Sonoma County, Green Valley of Russian River Valley</Locale>
@@ -754,11 +754,12 @@ def get_availability_xml(username, password):
 # Return a list of iWine ids for bottles to be excluded from the availability report
 #
 # Current implementation only excludes wines earmarked for anniversaries
-def select_excluded_wine_ids(inventory_list):
+def select_excluded_wine_ids(inventory_list, exclusion_keyword_list):
     excluded_wine_ids = []
     for bottle in inventory_list:
-        if bottle["BottleNote"].startswith("Anniversary"):
-            excluded_wine_ids.append(bottle["iWine"])
+        for keyword in exclusion_keyword_list:
+            if keyword in bottle["BottleNote"]:
+                excluded_wine_ids.append(bottle["iWine"])
     return excluded_wine_ids
 
 def wine_display_text(bottle):
@@ -797,6 +798,11 @@ def main(config):
 
     bottle_id_override = config.get("bottle_id")
 
+    exclusion_keyword_list = []
+    exclusion_keywords_string = config.get("exclusion_keywords")
+    if exclusion_keywords_string:
+        exclusion_keyword_list = exclusion_keywords_string.split(",")
+
     if username and password:
         print("CellarTracker credentials found, fetching data from server")
 
@@ -815,7 +821,7 @@ def main(config):
     inventory_list = inventory_xml_to_dict_list(raw_inventory_xml)
     availability_list = availability_xml_to_dict_list(raw_availability_xml)
 
-    excluded_wine_ids = select_excluded_wine_ids(inventory_list)
+    excluded_wine_ids = select_excluded_wine_ids(inventory_list, exclusion_keyword_list)
     displayable_bottles = select_displayable_bottles(availability_list, excluded_wine_ids)
 
     top_n_length = min(10, len(displayable_bottles))
@@ -828,7 +834,7 @@ def main(config):
         bottle = [b for b in availability_list if b["iWine"] == bottle_id_override][0]
 
     wine_glass_image = get_wine_glass_image_data(bottle)
-    wine_display_name = fix_wine_display_name(wine_display_text(bottle))
+    wine_display_name = wine_display_text(bottle)
 
     return render.Root(
         child = render.Row(
