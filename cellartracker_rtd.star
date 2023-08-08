@@ -1,10 +1,9 @@
 load("encoding/base64.star", "base64")
 load("encoding/csv.star", "csv")
-
-# load("encoding/json.star", "json")
 load("http.star", "http")
 load("random.star", "random")
 load("render.star", "render")
+load("schema.star", "schema")
 load("xpath.star", "xpath")
 
 AVAILABILITY_TEST_DATA_XML = """
@@ -793,13 +792,13 @@ def select_displayable_bottles(availability_list, excluded_wine_ids):
 def main(config):
     username = config.get("cellartracker_username")
     password = config.get("cellartracker_password")
+    exclusion_keywords_string = config.get("exclusion_keywords")
+    top_n_value = int(config.get("top_n_value") or 10)
 
     use_test_data = config.get("use_test_data")
-
     bottle_id_override = config.get("bottle_id")
 
     exclusion_keyword_list = []
-    exclusion_keywords_string = config.get("exclusion_keywords")
     if exclusion_keywords_string:
         exclusion_keyword_list = exclusion_keywords_string.split(",")
 
@@ -815,8 +814,14 @@ def main(config):
         raw_availability_xml = AVAILABILITY_TEST_DATA_XML
     else:
         print("No CellarTracker credentials found")
-        # Render empty screen if credentials are missing
-        return []
+
+        return render.Root(
+            render.WrappedText(
+                width = 64,
+                content = "CellarTracker credentials missing",
+                color = "#afafaf",
+            )
+        )
 
     inventory_list = inventory_xml_to_dict_list(raw_inventory_xml)
     availability_list = availability_xml_to_dict_list(raw_availability_xml)
@@ -824,7 +829,7 @@ def main(config):
     excluded_wine_ids = select_excluded_wine_ids(inventory_list, exclusion_keyword_list)
     displayable_bottles = select_displayable_bottles(availability_list, excluded_wine_ids)
 
-    top_n_length = min(10, len(displayable_bottles))
+    top_n_length = min(top_n_value, len(displayable_bottles))
     top_n_bottles = displayable_bottles[0:top_n_length]
 
     idx = random.number(0, len(top_n_bottles) - 1)
@@ -862,4 +867,36 @@ def main(config):
                 ),
             ],
         ),
+    )
+
+def get_schema():
+    return schema.Schema(
+        version = "1",
+        fields = [
+            schema.Text(
+                id = "cellartracker_username",
+                name = "CellarTracker username",
+                desc = "CellarTracker username",
+                icon = "user",
+            ),
+            schema.Text(
+                id = "cellartracker_password",
+                name = "CellarTracker password",
+                desc = "CellarTracker password",
+                icon = "key",
+            ),
+            schema.Text(
+                id = "exclusion_keywords",
+                name = "Exclusion keywords",
+                desc = "Comma-separated list of keywords. If any keyword is found in the BottleNote then the wine is excluded from display.",
+                icon = "ban",
+            ),
+            schema.Text(
+                id = "top_n_value",
+                name = "Top N bottles",
+                desc = "This app displays a random bottle from the top N bottles of the ready-to-drink report. Set N to a larger number if you want more variety in the results displayed or if you have a lot of bottles in your cellar that will be ready to drink soon.",
+                icon = "wineBottle",
+                default = "10",
+            ),
+        ]
     )
