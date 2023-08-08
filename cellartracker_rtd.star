@@ -864,7 +864,7 @@ def main(config):
     excluded_wine_ids = select_excluded_wine_ids(inventory_list, exclusion_keyword_list)
     displayable_bottles = select_displayable_bottles(availability_list, excluded_wine_ids)
 
-    
+    bottle = select_bottle_to_display(top_n_value, displayable_bottles)
 
     if bottle_id_override:
         bottle = [b for b in availability_list if b["iWine"] == bottle_id_override][0]
