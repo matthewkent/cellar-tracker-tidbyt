@@ -1,0 +1,356 @@
+<cellartracker>
+  <availability>
+    <row>
+      <iWine>2630586</iWine>
+      <Type>Red</Type>
+      <Color>Red</Color>
+      <Category>Dry</Category>
+      <Available>0.901735537190083</Available>
+      <Linear>0.823348168435467</Linear>
+      <Bell>0.901735537190083</Bell>
+      <Early>0.930867768595041</Early>
+      <Late>0.814504132231405</Late>
+      <Fast>0.982933884297521</Fast>
+      <TwinPeak>0.901735537190083</TwinPeak>
+      <Simple>0.5</Simple>
+      <Purchases>1</Purchases>
+      <ActualPurchases>1</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>1</LocalQuantityActual>
+      <LocalQuantity>1</LocalQuantity>
+      <Consumed>0</Consumed>
+      <ActualConsumed>0</ActualConsumed>
+      <Inventory>1</Inventory>
+      <ActualInventory>1</ActualInventory>
+      <Vintage>2014</Vintage>
+      <Wine>Clif Family Winery Cabernet Sauvignon Kit&#39;s Killer Cab</Wine>
+      <SortWine>Clif Family Winery Cabernet Sauvignon Kit&#39;s Killer Cab</SortWine>
+      <Locale>USA, California, Napa Valley, Howell Mountain</Locale>
+      <Producer>Clif Family Winery</Producer>
+      <Varietal>Cabernet Sauvignon</Varietal>
+      <MasterVarietal>Cabernet Sauvignon</MasterVarietal>
+      <Designation>Kit&#39;s Killer Cab</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Napa Valley</SubRegion>
+      <Appellation>Howell Mountain</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2017</ComBegin>
+      <ComEnd>2024</ComEnd>
+      <BeginConsume>1/1/2017</BeginConsume>
+      <EndConsume>12/31/2024</EndConsume>
+      <Source>Community</Source>
+    </row>
+    <row>
+      <iWine>2587207</iWine>
+      <Type>Red</Type>
+      <Color>Red</Color>
+      <Category>Dry</Category>
+      <Available>0.901735537190083</Available>
+      <Linear>0.823348168435467</Linear>
+      <Bell>0.901735537190083</Bell>
+      <Early>0.930867768595041</Early>
+      <Late>0.814504132231405</Late>
+      <Fast>0.982933884297521</Fast>
+      <TwinPeak>0.901735537190083</TwinPeak>
+      <Simple>0.5</Simple>
+      <Purchases>1</Purchases>
+      <ActualPurchases>1</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>1</LocalQuantityActual>
+      <LocalQuantity>1</LocalQuantity>
+      <Consumed>0</Consumed>
+      <ActualConsumed>0</ActualConsumed>
+      <Inventory>1</Inventory>
+      <ActualInventory>1</ActualInventory>
+      <Vintage>2014</Vintage>
+      <Wine>Epoch Estate Wines Creativity</Wine>
+      <SortWine>Epoch Estate Wines Creativity</SortWine>
+      <Locale>USA, California, Central Coast, Paso Robles</Locale>
+      <Producer>Epoch Estate Wines</Producer>
+      <Varietal>Mourvèdre</Varietal>
+      <MasterVarietal>Mourvèdre</MasterVarietal>
+      <Designation>Creativity</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Central Coast</SubRegion>
+      <Appellation>Paso Robles</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2017</ComBegin>
+      <ComEnd>2024</ComEnd>
+      <BeginConsume>1/1/2017</BeginConsume>
+      <EndConsume>12/31/2024</EndConsume>
+      <Source>Community</Source>
+    </row>
+    <row>
+      <iWine>3927893</iWine>
+      <Type>White - Sparkling</Type>
+      <Color>White</Color>
+      <Category>Sparkling</Category>
+      <Available>0.862888482632541</Available>
+      <Linear>0.862888482632541</Linear>
+      <Bell>0.928333333333333</Bell>
+      <Early>0.947833333333333</Early>
+      <Late>0.877666666666667</Late>
+      <Fast>0.988666666666667</Fast>
+      <TwinPeak>0.928333333333333</TwinPeak>
+      <Simple>1</Simple>
+      <Purchases>1</Purchases>
+      <ActualPurchases>1</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>1</LocalQuantityActual>
+      <LocalQuantity>1</LocalQuantity>
+      <Consumed>0</Consumed>
+      <ActualConsumed>0</ActualConsumed>
+      <Inventory>1</Inventory>
+      <ActualInventory>1</ActualInventory>
+      <Vintage>2017</Vintage>
+      <Wine>Iron Horse Vineyards Wedding Cuvée</Wine>
+      <SortWine>Iron Horse Vineyards Wedding Cuvée</SortWine>
+      <Locale>USA, California, Sonoma County, Green Valley of Russian River Valley</Locale>
+      <Producer>Iron Horse Vineyards</Producer>
+      <Varietal>Champagne Blend</Varietal>
+      <MasterVarietal>Champagne Blend</MasterVarietal>
+      <Designation>Wedding Cuvée</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Sonoma County</SubRegion>
+      <Appellation>Green Valley of Russian River Valley</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2021</ComBegin>
+      <ComEnd>2023</ComEnd>
+      <BeginConsume>1/1/2021</BeginConsume>
+      <EndConsume>12/31/2023</EndConsume>
+      <Source>Community</Source>
+    </row>
+    <row>
+      <iWine>4367782</iWine>
+      <Type>White</Type>
+      <Color>White</Color>
+      <Category>Dry</Category>
+      <Available>0.735222222222222</Available>
+      <Linear>0.528767123287671</Linear>
+      <Bell>0.542666666666667</Bell>
+      <Early>0.735222222222222</Early>
+      <Late>0.332333333333333</Late>
+      <Fast>0.859555555555556</Fast>
+      <TwinPeak>0.522666666666667</TwinPeak>
+      <Simple>0.5</Simple>
+      <Purchases>1</Purchases>
+      <ActualPurchases>1</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>1</LocalQuantityActual>
+      <LocalQuantity>1</LocalQuantity>
+      <Consumed>0</Consumed>
+      <ActualConsumed>0</ActualConsumed>
+      <Inventory>1</Inventory>
+      <ActualInventory>1</ActualInventory>
+      <Vintage>2021</Vintage>
+      <Wine>Lioco Sauvignon Blanc Lolonis Vineyard</Wine>
+      <SortWine>Lioco Sauvignon Blanc Lolonis Vineyard</SortWine>
+      <Locale>USA, California, North Coast, Redwood Valley</Locale>
+      <Producer>Lioco</Producer>
+      <Varietal>Sauvignon Blanc</Varietal>
+      <MasterVarietal>Sauvignon Blanc</MasterVarietal>
+      <Designation>Unknown</Designation>
+      <Vineyard>Lolonis Vineyard</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>North Coast</SubRegion>
+      <Appellation>Redwood Valley</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2022</ComBegin>
+      <ComEnd>2024</ComEnd>
+      <BeginConsume>1/1/2022</BeginConsume>
+      <EndConsume>12/31/2024</EndConsume>
+      <Source>Community</Source>
+    </row>
+    <row>
+      <iWine>4250600</iWine>
+      <Type>White</Type>
+      <Color>White</Color>
+      <Category>Dry</Category>
+      <Available>0.722450331125828</Available>
+      <Linear>0.517260273972603</Linear>
+      <Bell>0.524635761589404</Bell>
+      <Early>0.722450331125828</Early>
+      <Late>0.316556291390728</Late>
+      <Fast>0.851291390728477</Fast>
+      <TwinPeak>0.504635761589404</TwinPeak>
+      <Simple>0.333333333333333</Simple>
+      <Purchases>1</Purchases>
+      <ActualPurchases>1</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>1</LocalQuantityActual>
+      <LocalQuantity>1</LocalQuantity>
+      <Consumed>0</Consumed>
+      <ActualConsumed>0</ActualConsumed>
+      <Inventory>1</Inventory>
+      <ActualInventory>1</ActualInventory>
+      <Vintage>2020</Vintage>
+      <Wine>Abbot&#39;s Passage Noontide</Wine>
+      <SortWine>Abbot&#39;s Passage Noontide</SortWine>
+      <Locale>USA, California, Sonoma County, Sonoma Valley</Locale>
+      <Producer>Abbot&#39;s Passage</Producer>
+      <Varietal>White Blend</Varietal>
+      <MasterVarietal>White Blend</MasterVarietal>
+      <Designation>Noontide</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Sonoma County</SubRegion>
+      <Appellation>Sonoma Valley</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2021</ComBegin>
+      <ComEnd>2025</ComEnd>
+      <BeginConsume>1/1/2021</BeginConsume>
+      <EndConsume>12/31/2025</EndConsume>
+      <Source>Community</Source>
+    </row>
+    <row>
+      <iWine>3200359</iWine>
+      <Type>White - Sparkling</Type>
+      <Color>White</Color>
+      <Category>Sparkling</Category>
+      <Available>0.717415115005477</Available>
+      <Linear>0.717415115005477</Linear>
+      <Bell>0.79158940397351</Bell>
+      <Early>0.877715231788079</Early>
+      <Late>0.622384105960265</Late>
+      <Fast>0.953476821192053</Fast>
+      <TwinPeak>0.787748344370861</TwinPeak>
+      <Simple>0.5</Simple>
+      <Purchases>1</Purchases>
+      <ActualPurchases>1</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>1</LocalQuantityActual>
+      <LocalQuantity>1</LocalQuantity>
+      <Consumed>0</Consumed>
+      <ActualConsumed>0</ActualConsumed>
+      <Inventory>1</Inventory>
+      <ActualInventory>1</ActualInventory>
+      <Vintage>2014</Vintage>
+      <Wine>Iron Horse Vineyards Chinese Cuvee</Wine>
+      <SortWine>Iron Horse Vineyards Chinese Cuvee</SortWine>
+      <Locale>USA, California, Sonoma County, Green Valley of Russian River Valley</Locale>
+      <Producer>Iron Horse Vineyards</Producer>
+      <Varietal>Champagne Blend</Varietal>
+      <MasterVarietal>Champagne Blend</MasterVarietal>
+      <Designation>Chinese Cuvee</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Sonoma County</SubRegion>
+      <Appellation>Green Valley of Russian River Valley</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2020</ComBegin>
+      <ComEnd>2024</ComEnd>
+      <BeginConsume>1/1/2020</BeginConsume>
+      <EndConsume>12/31/2024</EndConsume>
+      <Source>Community</Source>
+    </row>
+    <row>
+      <iWine>3404098</iWine>
+      <Type>Red</Type>
+      <Color>Red</Color>
+      <Category>Dry</Category>
+      <Available>0.524635761589404</Available>
+      <Linear>0.517260273972603</Linear>
+      <Bell>0.524635761589404</Bell>
+      <Early>0.722450331125828</Early>
+      <Late>0.316556291390728</Late>
+      <Fast>0.851291390728477</Fast>
+      <TwinPeak>0.504635761589404</TwinPeak>
+      <Simple>0.333333333333333</Simple>
+      <Purchases>1</Purchases>
+      <ActualPurchases>1</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>1</LocalQuantityActual>
+      <LocalQuantity>1</LocalQuantity>
+      <Consumed>0</Consumed>
+      <ActualConsumed>0</ActualConsumed>
+      <Inventory>1</Inventory>
+      <ActualInventory>1</ActualInventory>
+      <Vintage>2018</Vintage>
+      <Wine>Vallone di Cecione Canaiolo</Wine>
+      <SortWine>Vallone di Cecione Canaiolo</SortWine>
+      <Locale>Italy, Tuscany, Toscana IGT</Locale>
+      <Producer>Vallone di Cecione</Producer>
+      <Varietal>Canaiolo</Varietal>
+      <MasterVarietal>Canaiolo</MasterVarietal>
+      <Designation>Unknown</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>Italy</Country>
+      <Region>Tuscany</Region>
+      <SubRegion>Unknown</SubRegion>
+      <Appellation>Toscana IGT</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2021</ComBegin>
+      <ComEnd>2025</ComEnd>
+      <BeginConsume>1/1/2021</BeginConsume>
+      <EndConsume>12/31/2025</EndConsume>
+      <Source>Community</Source>
+    </row>
+    <row>
+      <iWine>4551812</iWine>
+      <Type>Rosé</Type>
+      <Color>Rosé</Color>
+      <Category>Dry</Category>
+      <Available>-0.534246575342466</Available>
+      <Linear>-0.534246575342466</Linear>
+      <Bell>-0.870338983050847</Bell>
+      <Early>1.94915254237289E-02</Early>
+      <Late>-1.34915254237288</Late>
+      <Fast>1.15762711864407</Fast>
+      <TwinPeak>-0.566101694915254</TwinPeak>
+      <Simple>1.5</Simple>
+      <Purchases>5</Purchases>
+      <ActualPurchases>5</ActualPurchases>
+      <Pending>0</Pending>
+      <ActualPending>0</ActualPending>
+      <LocalQuantityActual>3</LocalQuantityActual>
+      <LocalQuantity>3</LocalQuantity>
+      <Consumed>2</Consumed>
+      <ActualConsumed>2</ActualConsumed>
+      <Inventory>3</Inventory>
+      <ActualInventory>3</ActualInventory>
+      <Vintage>2022</Vintage>
+      <Wine>Arnot-Roberts Rosé</Wine>
+      <SortWine>Arnot-Roberts Rosé</SortWine>
+      <Locale>USA, California</Locale>
+      <Producer>Arnot-Roberts</Producer>
+      <Varietal>Touriga Nacional</Varietal>
+      <MasterVarietal>Touriga Nacional</MasterVarietal>
+      <Designation>Rosé</Designation>
+      <Vineyard>Unknown</Vineyard>
+      <Country>USA</Country>
+      <Region>California</Region>
+      <SubRegion>Unknown</SubRegion>
+      <Appellation>California</Appellation>
+      <PersonalBegin></PersonalBegin>
+      <PersonalEnd></PersonalEnd>
+      <ComBegin>2023</ComBegin>
+      <ComEnd>2024</ComEnd>
+      <BeginConsume>1/1/2023</BeginConsume>
+      <EndConsume>12/31/2024</EndConsume>
+      <Source>Community</Source>
+    </row>
+  </availability>
+</cellartracker>
