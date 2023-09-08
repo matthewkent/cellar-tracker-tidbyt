@@ -1,5 +1,4 @@
 load("encoding/base64.star", "base64")
-load("encoding/csv.star", "csv")
 load("http.star", "http")
 load("random.star", "random")
 load("render.star", "render")
