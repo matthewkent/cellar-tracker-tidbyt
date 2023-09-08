@@ -778,8 +778,6 @@ def get_availability_xml(username, password):
     return resp.body()
 
 # Return a list of iWine ids for bottles to be excluded from the availability report
-#
-# Current implementation only excludes wines earmarked for anniversaries
 def select_excluded_wine_ids(inventory_list, exclusion_keyword_list):
     excluded_wine_ids = []
     for bottle in inventory_list:
