@@ -104,7 +104,7 @@ def get_wine_glass_icon(bottle):
         return SPARKLING_WINE_GLASS_ICON
     elif wine_type == "Rosé":
         return ROSE_WINE_GLASS_ICON
-    else:  
+    else:
         return RED_WINE_GLASS_ICON
 
 def select_displayable_bottles(availability_list, excluded_wine_ids):
@@ -148,7 +148,7 @@ def main(config):
                 width = 64,
                 content = "CellarTracker credentials missing",
                 color = "#afafaf",
-            )
+            ),
         )
 
     inventory_list = inventory_xml_to_dict_list(raw_inventory_xml)
@@ -222,5 +222,5 @@ def get_schema():
                 icon = "wineBottle",
                 default = "10",
             ),
-        ]
+        ],
     )
